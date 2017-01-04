@@ -12,10 +12,27 @@ namespace ConsoleClient
     {
         public static void Main(string[] args)
         {
-            var r = Run().Result;
+            //Run().Wait();
+            RunPass().Wait();
         }
 
-        private static async Task<bool> Run()
+        private static async Task RunPass()
+        {
+            var disco = await DiscoveryClient.GetAsync("http://localhost:5000");
+            var tokenClient = new TokenClient(disco.TokenEndpoint, "ro.client", "secret");
+            var tokenResponse = await tokenClient.RequestResourceOwnerPasswordAsync("alice", "password", "api1");
+
+            if (tokenResponse.IsError)
+            {
+                Console.WriteLine(tokenResponse.Error);
+                return;
+            }
+
+            Console.WriteLine(tokenResponse.Json);
+            Console.WriteLine("\n\n");
+        }
+
+        private static async Task Run()
         {
             var disco = await DiscoveryClient.GetAsync("http://localhost:5000");
             var tokenClient = new TokenClient(disco.TokenEndpoint, "client", "secret");
@@ -24,7 +41,7 @@ namespace ConsoleClient
             if (tokenResponse.IsError)
             {
                 Console.WriteLine(tokenResponse.Error);
-                return false;
+                return;
             }
 
             Console.WriteLine(tokenResponse.Json);
@@ -42,8 +59,6 @@ namespace ConsoleClient
                 var content = await response.Content.ReadAsStringAsync();
                 Console.WriteLine(JArray.Parse(content));
             }
-
-            return true;
         }
     }
 }

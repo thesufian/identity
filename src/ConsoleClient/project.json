@@ -1,15 +1,15 @@
-﻿{
+{
   "version": "1.0.0-*",
   "buildOptions": {
     "emitEntryPoint": true
   },
 
   "dependencies": {
+    "IdentityModel": "2.1.1",
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.1"
-    },
-    "IdentityModel": "2.0.0"
+    }
   },
 
   "frameworks": {
