@@ -56,6 +56,17 @@ namespace MvcClient
             });
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            //app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
+            //{
+            //    AuthenticationScheme = "oidc",
+            //    SignInScheme = "Cookies",
+
+            //    Authority = "http://localhost:5000",
+            //    RequireHttpsMetadata = false,
+
+            //    ClientId = "mvc",
+            //    SaveTokens = true
+            //});
             app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
             {
                 AuthenticationScheme = "oidc",
@@ -65,6 +76,12 @@ namespace MvcClient
                 RequireHttpsMetadata = false,
 
                 ClientId = "mvc",
+                ClientSecret = "secret",
+
+                ResponseType = "code id_token",
+                Scope = { "api1", "offline_access" },
+
+                GetClaimsFromUserInfoEndpoint = true,
                 SaveTokens = true
             });
 
