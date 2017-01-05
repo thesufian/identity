@@ -39,11 +39,11 @@ namespace IdentityServerWithAspNetIdentity
                     ClientId = "client",
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
 
-                    ClientSecrets = 
+                    ClientSecrets =
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "api1" }
+                    AllowedScopes = {"api1"}
                 },
 
                 // resource owner password grant client
@@ -52,11 +52,11 @@ namespace IdentityServerWithAspNetIdentity
                     ClientId = "ro.client",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
 
-                    ClientSecrets = 
+                    ClientSecrets =
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "api1" }
+                    AllowedScopes = {"api1"}
                 },
 
                 // OpenID Connect hybrid flow and client credentials client (MVC)
@@ -68,13 +68,13 @@ namespace IdentityServerWithAspNetIdentity
 
                     RequireConsent = true,
 
-                    ClientSecrets = 
+                    ClientSecrets =
                     {
                         new Secret("secret".Sha256())
                     },
 
-                    RedirectUris = { "http://localhost:5002/signin-oidc" },
-                    PostLogoutRedirectUris = { "http://localhost:5002" },
+                    RedirectUris = {"http://localhost:5002/signin-oidc"},
+                    PostLogoutRedirectUris = {"http://localhost:5002"},
 
                     AllowedScopes =
                     {
@@ -83,6 +83,24 @@ namespace IdentityServerWithAspNetIdentity
                         "api1"
                     },
                     AllowOfflineAccess = true
+                },
+                new Client
+                {
+                    ClientId = "js",
+                    ClientName = "JavaScript Client",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+
+                    RedirectUris = {"http://localhost:5003/callback.html"},
+                    PostLogoutRedirectUris = {"http://localhost:5003/index.html"},
+                    AllowedCorsOrigins = {"http://localhost:5003"},
+
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "api1"
+                    }
                 }
             };
         }
